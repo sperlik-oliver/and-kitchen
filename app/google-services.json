@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "913592273839",
+    "project_id": "kitchen-d1c79",
+    "storage_bucket": "kitchen-d1c79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913592273839:android:a7f5eaa736f4aa48a8fd5a",
+        "android_client_info": {
+          "package_name": "tech.sperlikoliver.and_kitchen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913592273839-uhr31nk4na5dkligdbgf1gltrshnc1oa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-nncCPIkxMM3UChBofYtRhkKD2TcrWQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913592273839-uhr31nk4na5dkligdbgf1gltrshnc1oa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
