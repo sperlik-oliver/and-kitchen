@@ -26,10 +26,7 @@ class ShoppingListViewModel: ViewModel() {
     }
     init{
         repository.addPropertyChangeListener(PropertyChangeListener {
-            event -> setShoppingList(event.newValue as List<ShoppingListItem>)
-            for (shoppingListItem in shoppingList.value){
-                Log.e("Viewmodel:", shoppingListItem.name)
-            }
+            event -> setShoppingList(event.newValue as List<ShoppingListItem>); Log.i("View model updating shopping list", "update")
         })
     }
 
@@ -42,6 +39,9 @@ class ShoppingListViewModel: ViewModel() {
         repository.createShoppingListItem(shoppingListItem)
     }
 
+    fun editShoppingListItem(shoppingListItem: ShoppingListItem){
+        repository.editShoppingListItem(shoppingListItem)
+        }
 
 }
 

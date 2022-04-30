@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
@@ -58,9 +60,19 @@ Column(){
         .padding(24.dp)
         .fillMaxSize(1f)) {
         items(shoppingList.value){
-                item -> ShoppingListItem(shoppingListItem = item, viewModel = viewModel)
+                item -> if(!item.completed) {ShoppingListItem(shoppingListItem = item, viewModel = viewModel)}
         }
     }
+
+//    LazyColumn (modifier = Modifier
+//        .padding(24.dp)
+//        .fillMaxSize(1f)) {
+//        items(shoppingList.value){
+//                item -> if(item.completed) {ShoppingListItem(shoppingListItem = item, viewModel = viewModel)}
+//        }
+//    }
+
+
 
     }
 
@@ -71,9 +83,21 @@ Column(){
 
 @Composable
 fun ShoppingListItem(shoppingListItem: ShoppingListItem, viewModel: ShoppingListViewModel) {
+    var itemCompleted by remember { mutableStateOf(shoppingListItem.completed) }
     Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Row (horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
+            IconButton(onClick =
+            {
+                itemCompleted = !itemCompleted
+                shoppingListItem.completed = itemCompleted
+                viewModel.editShoppingListItem(shoppingListItem)
+            }){
+                Icon(Icons.Filled.CheckCircle, "Complete Item")
+            }
             Text(text = shoppingListItem.name)
+            if(itemCompleted){
+                Text(text = "completed")
+            }
         }
         Row (horizontalArrangement = Arrangement.End, modifier = Modifier.weight(1f)){
             IconButton(onClick = { viewModel.deleteShoppingListItem(shoppingListItem) }) {

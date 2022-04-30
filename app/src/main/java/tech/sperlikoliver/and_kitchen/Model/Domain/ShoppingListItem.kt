@@ -1,8 +1,9 @@
 package tech.sperlikoliver.and_kitchen.Model.Domain
 
-class ShoppingListItem (
+data class ShoppingListItem (
         val id : String = "",
-        val name : String
+        val name : String,
+        var completed : Boolean = false
     ) {
 
 }
