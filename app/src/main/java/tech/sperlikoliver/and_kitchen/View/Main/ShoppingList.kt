@@ -16,14 +16,26 @@ import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
 import tech.sperlikoliver.and_kitchen.ViewModel.ShoppingListViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import tech.sperlikoliver.and_kitchen.View.Scaffold.Base.FloatingActionButtonWrapper
 
 @Composable
-fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel = ShoppingListViewModel()) {
+fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel = ShoppingListViewModel(), fabPressed : Boolean) {
+
+    if (fabPressed){
+        Text(text = "Fab Pressed!")
+    }
 
     val viewModel: ShoppingListViewModel = remember {
         ShoppingListViewModel()
