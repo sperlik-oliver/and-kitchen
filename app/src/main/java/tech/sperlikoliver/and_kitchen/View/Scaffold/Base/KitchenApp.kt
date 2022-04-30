@@ -25,20 +25,20 @@ import androidx.compose.runtime.*
 
 @Composable
 fun KitchenApp () {
-    var fabPressed by remember {mutableStateOf(false)}
-    val onPressedChange = { value : Boolean -> fabPressed = value}
+//    var fabPressed by remember {mutableStateOf(false)}
+//    val onPressedChange = { value : Boolean -> fabPressed = value}
     val navController = rememberNavController();
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         topBar = { TopBarView(navController = navController, currentRoute = currentRoute)},
         bottomBar = { BottomBarView(navController = navController, currentRoute = currentRoute)},
-        floatingActionButtonPosition = FabPosition.End,
-        floatingActionButton = { FloatingActionButtonWrapper(navController = navController, fabPressed = fabPressed, onPressedChange = onPressedChange) }
+//        floatingActionButtonPosition = FabPosition.End,
+//        floatingActionButton = { FloatingActionButtonWrapper(navController = navController, fabPressed = fabPressed, onPressedChange = onPressedChange) }
     ) {
         NavHost(navController = navController, startDestination = "recipes") {
             composable("recipes") { Recipes(navController = navController)}
-            composable("shoppingList") { ShoppingList(navController = navController, fabPressed = fabPressed) }
+            composable("shoppingList") { ShoppingList(navController = navController) }
             composable("mealPlanner") { MealPlanner(navController = navController)}
             composable("settings") { Settings(navController = navController) }
         }

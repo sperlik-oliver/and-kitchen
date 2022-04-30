@@ -6,20 +6,17 @@ import android.content.ContextWrapper
 import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
 import tech.sperlikoliver.and_kitchen.ViewModel.ShoppingListViewModel
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleOwner
@@ -27,14 +24,16 @@ import androidx.lifecycle.Observer
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import tech.sperlikoliver.and_kitchen.View.Scaffold.Base.FloatingActionButtonWrapper
 
 @Composable
-fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel = ShoppingListViewModel(), fabPressed : Boolean) {
+fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel = ShoppingListViewModel()) {
 
-    if (fabPressed){
-        Text(text = "Fab Pressed!")
+    var addingItemField by remember {
+        mutableStateOf("")
     }
 
     val viewModel: ShoppingListViewModel = remember {
@@ -43,20 +42,45 @@ fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel
 
     val shoppingList = viewModel.shoppingList.collectAsState()
 
+Column(){
 
-    LazyColumn {
+    Row {
+
+        TextField(
+            value = addingItemField,
+            onValueChange = { newValue-> addingItemField = newValue }
+        )
+        IconButton(onClick = { viewModel.createShoppingListItem(ShoppingListItem(name = addingItemField)); addingItemField = ""}) {
+            Icon(Icons.Filled.Add, "Add Item")
+        }
+    }
+    LazyColumn (modifier = Modifier
+        .padding(24.dp)
+        .fillMaxSize(1f)) {
         items(shoppingList.value){
-            item -> ShoppingListItem(shoppingListItem = item)
+                item -> ShoppingListItem(shoppingListItem = item, viewModel = viewModel)
         }
     }
 
+    }
 
 }
 
-@Composable
-fun ShoppingListItem(shoppingListItem: ShoppingListItem) {
 
-      Text(text = shoppingListItem.name)
+
+
+@Composable
+fun ShoppingListItem(shoppingListItem: ShoppingListItem, viewModel: ShoppingListViewModel) {
+    Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+        Row (horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
+            Text(text = shoppingListItem.name)
+        }
+        Row (horizontalArrangement = Arrangement.End, modifier = Modifier.weight(1f)){
+            IconButton(onClick = { viewModel.deleteShoppingListItem(shoppingListItem) }) {
+                Icon(Icons.Filled.Delete, "Delete Item")
+            }
+        }
+    }
 
 }
 

@@ -35,11 +35,11 @@ class ShoppingListViewModel: ViewModel() {
 
 
     fun deleteShoppingListItem(shoppingListItem: ShoppingListItem) {
-//        repository.deleteShoppingListItem(shoppingListItem)
+        repository.deleteShoppingListItem(shoppingListItem)
     }
 
     fun createShoppingListItem(shoppingListItem: ShoppingListItem) {
-//        repository.createShoppingListItem(shoppingListItem)
+        repository.createShoppingListItem(shoppingListItem)
     }
 
 

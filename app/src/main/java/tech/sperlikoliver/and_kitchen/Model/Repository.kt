@@ -23,8 +23,7 @@ class Repository : PropertyChangeAware() {
             if (snapshot != null && snapshot.documents.isNotEmpty()) {
                 var shoppingList: MutableList<ShoppingListItem> = mutableListOf()
                 for (document in snapshot) {
-                    var shoppingListItem = ShoppingListItem(document.data["name"] as String)
-                    Log.e("Model", shoppingListItem.name)
+                    var shoppingListItem = ShoppingListItem(id = document.id, document.data["name"] as String)
                     shoppingList.add(shoppingListItem)
                 }
                 updateShoppingList(shoppingList)
@@ -42,6 +41,17 @@ class Repository : PropertyChangeAware() {
     private fun updateShoppingList (shoppingList : List<ShoppingListItem>) {
         Log.i("Repository", shoppingList.toString())
         propertyChangeSupport.firePropertyChange("shopping_list", null, shoppingList)
+    }
+
+    fun createShoppingListItem(shoppingListItem : ShoppingListItem){
+        val data = hashMapOf(
+            "name" to shoppingListItem.name
+        )
+        shoppingListRef.add(data)
+    }
+
+    fun deleteShoppingListItem(shoppingListItem: ShoppingListItem){
+        shoppingListRef.document(shoppingListItem.id).delete()
     }
 }
 
