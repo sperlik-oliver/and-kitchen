@@ -56,21 +56,41 @@ Column(){
             Icon(Icons.Filled.Add, "Add Item")
         }
     }
-    LazyColumn (modifier = Modifier
-        .padding(24.dp)
-        .fillMaxSize(1f)) {
-        items(shoppingList.value){
-                item -> if(!item.completed) {ShoppingListItem(shoppingListItem = item, viewModel = viewModel)}
-        }
-    }
-
 //    LazyColumn (modifier = Modifier
 //        .padding(24.dp)
 //        .fillMaxSize(1f)) {
 //        items(shoppingList.value){
-//                item -> if(item.completed) {ShoppingListItem(shoppingListItem = item, viewModel = viewModel)}
+//                item ->  ShoppingListItem(shoppingListItem = item, viewModel = viewModel)
 //        }
 //    }
+
+    LazyColumn (modifier = Modifier
+        .padding(24.dp)
+        .fillMaxSize(1f)) {
+        items(shoppingList.value){
+                item ->      Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+            Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
+                IconButton(onClick =
+                {
+                    viewModel.editShoppingListItem(item)
+
+                }){
+                    Icon(Icons.Filled.CheckCircle, "Complete Item")
+                }
+                Text(text = item.name)
+                if(item.completed){
+                    Text(text = "completed")
+                }
+            }
+            Row (horizontalArrangement = Arrangement.End, modifier = Modifier.weight(1f)){
+                IconButton(onClick = { viewModel.deleteShoppingListItem(item) }) {
+                    Icon(Icons.Filled.Delete, "Delete Item")
+                }
+            }
+        }
+        }
+    }
+
 
 
 
@@ -83,19 +103,18 @@ Column(){
 
 @Composable
 fun ShoppingListItem(shoppingListItem: ShoppingListItem, viewModel: ShoppingListViewModel) {
-    var itemCompleted by remember { mutableStateOf(shoppingListItem.completed) }
     Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-        Row (horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
+        Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
             IconButton(onClick =
             {
-                itemCompleted = !itemCompleted
-                shoppingListItem.completed = itemCompleted
-                viewModel.editShoppingListItem(shoppingListItem)
+//                shoppingListItem.completed = !shoppingListItem.completed
+                val newShoppingListItem = ShoppingListItem(id = shoppingListItem.id, name = shoppingListItem.name, completed = !shoppingListItem.completed)
+                viewModel.editShoppingListItem(newShoppingListItem)
             }){
                 Icon(Icons.Filled.CheckCircle, "Complete Item")
             }
             Text(text = shoppingListItem.name)
-            if(itemCompleted){
+            if(shoppingListItem.completed){
                 Text(text = "completed")
             }
         }

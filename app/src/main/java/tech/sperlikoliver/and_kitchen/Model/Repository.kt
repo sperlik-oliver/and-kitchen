@@ -4,6 +4,7 @@ import android.util.Log
 import android.util.LogPrinter
 import android.util.Property
 import androidx.compose.animation.core.updateTransition
+import com.google.common.collect.ImmutableList
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,15 +24,15 @@ class Repository : PropertyChangeAware() {
         shoppingListRef.addSnapshotListener (MetadataChanges.EXCLUDE) { snapshot, e ->
             if (snapshot != null && snapshot.documents.isNotEmpty()) {
                 var shoppingList: MutableList<ShoppingListItem> = mutableListOf()
+
                 for (document in snapshot) {
                     var shoppingListItem = ShoppingListItem(id = document.id, document.data["name"] as String, completed = document.data["completed"] as Boolean)
                     shoppingList.add(shoppingListItem)
                 }
-                Log.i("Updating shopping list", "Updating shopping list")
-                updateShoppingList(shoppingList)
+                updateShoppingList(ImmutableList.copyOf(shoppingList))
             } else if (snapshot != null && snapshot.documents.isEmpty()){
                 var shoppingList: MutableList<ShoppingListItem> = mutableListOf()
-                updateShoppingList(shoppingList)
+                updateShoppingList(ImmutableList.copyOf(shoppingList))
             } else if (e != null) {
                 Log.d("Firebase error: ", "Cannot retrieve data")
             } else {
@@ -40,7 +41,7 @@ class Repository : PropertyChangeAware() {
         }
     }
 
-    private fun updateShoppingList (shoppingList : List<ShoppingListItem>) {
+    private fun updateShoppingList (shoppingList : ImmutableList<ShoppingListItem>) {
 
         propertyChangeSupport.firePropertyChange("shopping_list", null, shoppingList)
     }
@@ -58,9 +59,10 @@ class Repository : PropertyChangeAware() {
     }
 
     fun editShoppingListItem(shoppingListItem: ShoppingListItem){
+
         val data = hashMapOf(
             "name" to shoppingListItem.name,
-            "completed" to shoppingListItem.completed
+            "completed" to !shoppingListItem.completed
         )
         shoppingListRef.document(shoppingListItem.id).set(data)
     }

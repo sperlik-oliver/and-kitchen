@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tech.sperlikoliver.and_kitchen.Model.Domain.Ingredient
@@ -17,16 +18,16 @@ import java.beans.PropertyChangeListener
 
 class ShoppingListViewModel: ViewModel() {
     private val repository : Repository = Repository()
-    private val _shoppingListFlow = MutableStateFlow<List<ShoppingListItem>>(emptyList())
-    val shoppingList : StateFlow<List<ShoppingListItem>> get() = _shoppingListFlow
+    private val _shoppingListFlow = MutableStateFlow<ImmutableList<ShoppingListItem>>(ImmutableList.of())
+    val shoppingList : StateFlow<ImmutableList<ShoppingListItem>> get() = _shoppingListFlow
 
 
-    fun setShoppingList (shoppingList : List<ShoppingListItem>) {
+    fun setShoppingList (shoppingList : ImmutableList<ShoppingListItem>) {
         _shoppingListFlow.value = shoppingList
     }
     init{
         repository.addPropertyChangeListener(PropertyChangeListener {
-            event -> setShoppingList(event.newValue as List<ShoppingListItem>); Log.i("View model updating shopping list", "update")
+            event -> setShoppingList(event.newValue as ImmutableList<ShoppingListItem>)
         })
     }
 
