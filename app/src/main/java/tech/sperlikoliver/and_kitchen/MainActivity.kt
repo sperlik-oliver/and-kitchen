@@ -14,12 +14,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key.Companion.Home
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import tech.sperlikoliver.and_kitchen.ui.theme.And_kitchenTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-//        WindowCompat.setDecorFitsSystemWindows(window, true)
+
+
         super.onCreate(savedInstanceState)
 
 

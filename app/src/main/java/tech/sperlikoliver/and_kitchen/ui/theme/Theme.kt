@@ -8,22 +8,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Color(0xFF2196f3),
+    primaryVariant = Color(0xFFffffff),
+    background = Color(0xFF000000),
+    secondary = Color(0xFFd32f2f),
+    secondaryVariant = Color(0xFF8bc34a),
+    error = Color(0xFFd500000)
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200,
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color(251,140,0),
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-
+    primary = Color(0xFFf57c00),
+    primaryVariant = Color(0xFF000000),
+    background = Color(0xFFffffff),
+    secondary = Color(0xFFd32f2f),
+    secondaryVariant = Color(0xFF8bc34a),
+    error = Color(0xFFd500000)
 )
 
 @Composable
@@ -36,8 +35,6 @@ fun And_kitchenTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
 
     MaterialTheme(
         colors = colors,
-        typography = Typography,
-        shapes = Shapes,
         content = content
     )
 }

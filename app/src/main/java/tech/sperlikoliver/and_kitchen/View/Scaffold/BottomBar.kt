@@ -3,6 +3,7 @@ package tech.sperlikoliver.and_kitchen
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.List
@@ -12,11 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import tech.sperlikoliver.and_kitchen.View.Scaffold.NavigationIcon
 
 @Composable
 fun BottomBarView (navController: NavController, currentRoute: String?) {
-    BottomAppBar(backgroundColor = Color.White){
+    BottomAppBar(backgroundColor = MaterialTheme.colors.background){
 
         NavigationIcon(
             navController = navController,

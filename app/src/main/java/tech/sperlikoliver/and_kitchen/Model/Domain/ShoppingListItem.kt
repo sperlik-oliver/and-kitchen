@@ -5,5 +5,4 @@ data class ShoppingListItem (
         val name : String,
         val completed : Boolean = false
     ) {
-
 }

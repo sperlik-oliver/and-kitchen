@@ -23,15 +23,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import java.util.logging.Level.INFO
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.scale
-import tech.sperlikoliver.and_kitchen.View.Scaffold.NavigationIcon
-import tech.sperlikoliver.and_kitchen.View.Scaffold.TopBarTitle
 
 
 @Composable
 fun TopBarView(navController : NavController, currentRoute: String?) {
 
 
-    TopAppBar(backgroundColor = Color(255, 255, 255)){
+    TopAppBar(backgroundColor = MaterialTheme.colors.background){
         Row(modifier = Modifier.weight(2f), horizontalArrangement = Arrangement.Start){
             TopBarTitle(currentRoute = currentRoute)
         }
@@ -54,6 +52,22 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
         }
 
     }
+
+@Composable
+fun TopBarTitle(currentRoute : String?){
+    val title : String
+    when(currentRoute){
+        "settings" -> title = "settings"
+        "shoppingList" -> title = "shopping list"
+        "recipes" -> title = "recipes"
+        "mealPlanner" -> title = "meal planner"
+        else -> {
+            title = "error"
+        }
+    }
+
+    Text(text = title.uppercase(), color = MaterialTheme.colors.primaryVariant, modifier = Modifier.padding(5.dp))
+}
 
 
 
