@@ -1,4 +1,4 @@
-package tech.sperlikoliver.and_kitchen.Model
+package tech.sperlikoliver.and_kitchen.Model.Utility
 
 import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport

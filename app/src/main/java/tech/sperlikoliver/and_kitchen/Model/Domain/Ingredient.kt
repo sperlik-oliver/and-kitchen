@@ -1,7 +1,6 @@
 package tech.sperlikoliver.and_kitchen.Model.Domain
 
-class Ingredient (
-    val name : String,
-    val amount : String
-        ) {
-}
+data class Ingredient (
+    val name : String = "",
+    val amount : String = ""
+        )

@@ -33,7 +33,7 @@ import com.google.common.collect.ImmutableList
 
 
 @Composable
-fun ShoppingList (navController: NavController, viewModel: ShoppingListViewModel = ShoppingListViewModel()) {
+fun ShoppingList (navController: NavController) {
 
     var addingItemField by remember {
         mutableStateOf("")
@@ -63,9 +63,6 @@ Column (modifier = Modifier.fillMaxSize(1f)){
 
     ShoppingListLazyCol(shoppingList = shoppingList.value, completed = false, viewModel = viewModel)
     ShoppingListLazyCol(shoppingList = shoppingList.value, completed = true, viewModel = viewModel)
-
-
-
 
 
     }

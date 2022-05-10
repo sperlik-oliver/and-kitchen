@@ -23,6 +23,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import java.util.logging.Level.INFO
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.scale
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -33,11 +34,11 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
         Row(modifier = Modifier.weight(2f), horizontalArrangement = Arrangement.Start){
             TopBarTitle(currentRoute = currentRoute)
         }
-
-        Row(modifier = Modifier.weight(3f), horizontalArrangement = Arrangement.End) {
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Filled.Search, "Search")
-            }
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            Row(modifier = Modifier.weight(3f), horizontalArrangement = Arrangement.End) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(Icons.Filled.Search, "Search")
+                }
                 NavigationIcon(
                     navController = navController,
                     currentRoute = currentRoute,
@@ -48,6 +49,9 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
 
 
             }
+        } else {
+
+        }
 
         }
 
@@ -61,6 +65,7 @@ fun TopBarTitle(currentRoute : String?){
         "shoppingList" -> title = "shopping list"
         "recipes" -> title = "recipes"
         "mealPlanner" -> title = "meal planner"
+        "login" -> title = "Kitchen"
         else -> {
             title = "error"
         }

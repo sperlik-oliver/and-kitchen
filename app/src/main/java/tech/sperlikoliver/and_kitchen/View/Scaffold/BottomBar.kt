@@ -13,36 +13,40 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun BottomBarView (navController: NavController, currentRoute: String?) {
     BottomAppBar(backgroundColor = MaterialTheme.colors.background){
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            NavigationIcon(
+                navController = navController,
+                currentRoute = currentRoute,
+                navigationRoute = "recipes",
+                contentDescription = "Recipes",
+                icon = Icons.Filled.List,
+                modifier = Modifier.weight(1f)
+            )
 
-        NavigationIcon(
-            navController = navController,
-            currentRoute = currentRoute,
-            navigationRoute = "recipes",
-            contentDescription = "Recipes",
-            icon = Icons.Filled.List,
-            modifier = Modifier.weight(1f)
-        )
+            NavigationIcon(
+                navController = navController,
+                currentRoute = currentRoute,
+                navigationRoute = "shoppingList",
+                contentDescription = "Shopping List",
+                icon = Icons.Filled.ShoppingCart,
+                modifier = Modifier.weight(1f)
+            )
 
-        NavigationIcon(
-            navController = navController,
-            currentRoute = currentRoute,
-            navigationRoute = "shoppingList",
-            contentDescription = "Shopping List",
-            icon = Icons.Filled.ShoppingCart,
-            modifier = Modifier.weight(1f)
-        )
+            NavigationIcon(
+                navController = navController,
+                currentRoute = currentRoute,
+                navigationRoute = "mealPlanner",
+                contentDescription = "Meal Planner",
+                icon = Icons.Filled.DateRange,
+                modifier = Modifier.weight(1f)
+            )
+        } else{
 
-        NavigationIcon(
-            navController = navController,
-            currentRoute = currentRoute,
-            navigationRoute = "mealPlanner",
-            contentDescription = "Meal Planner",
-            icon = Icons.Filled.DateRange,
-            modifier = Modifier.weight(1f)
-        )
+        }
     }
 }
