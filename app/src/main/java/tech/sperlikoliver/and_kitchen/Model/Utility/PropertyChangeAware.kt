@@ -3,9 +3,10 @@ package tech.sperlikoliver.and_kitchen.Model.Utility
 import java.beans.PropertyChangeListener
 import java.beans.PropertyChangeSupport
 
-open class PropertyChangeAware {
+interface PropertyChangeAware {
 
-    protected val propertyChangeSupport = PropertyChangeSupport(this)
+
+    val propertyChangeSupport : PropertyChangeSupport
 
     fun addPropertyChangeListener(listener : PropertyChangeListener){
         propertyChangeSupport.addPropertyChangeListener(listener)

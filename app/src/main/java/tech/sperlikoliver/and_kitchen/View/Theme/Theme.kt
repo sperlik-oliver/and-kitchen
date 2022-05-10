@@ -1,4 +1,4 @@
-package tech.sperlikoliver.and_kitchen.ui.theme
+package tech.sperlikoliver.and_kitchen.View.Theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

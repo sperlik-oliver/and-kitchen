@@ -70,7 +70,7 @@ Column (modifier = Modifier.fillMaxSize(1f)){
 }
 
 @Composable
-fun ShoppingListLazyCol(shoppingList : ImmutableList<ShoppingListItem>, completed : Boolean, viewModel: ShoppingListViewModel){
+fun ShoppingListLazyCol(shoppingList : MutableList<ShoppingListItem>, completed : Boolean, viewModel: ShoppingListViewModel){
     var showList : Boolean by remember { mutableStateOf(true) }
     val titleText = if (completed) { "Completed" } else { "Pending" }
     Column {

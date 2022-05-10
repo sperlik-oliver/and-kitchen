@@ -4,28 +4,30 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tech.sperlikoliver.and_kitchen.Model.Repository.ShoppingListRepositoryImpl
+import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.ShoppingListRepositoryImpl
+import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.UserRepositoryImpl
+import tech.sperlikoliver.and_kitchen.Model.Repository.Interface.IUserRepository
 
 class SettingsViewModel() : ViewModel() {
-    private val shoppingListRepositoryImpl : ShoppingListRepositoryImpl = ShoppingListRepositoryImpl()
+    private val userRepositoryImpl: IUserRepository = UserRepositoryImpl()
     private val _emailStateFlow = MutableStateFlow(FirebaseAuth.getInstance().currentUser?.email!!)
-    val emailState : StateFlow<String> get() = _emailStateFlow
+    val emailState: StateFlow<String> get() = _emailStateFlow
 
-    fun setEmailState (email : String){
+    private fun setEmailState(email: String) {
         _emailStateFlow.value = email
     }
 
 
     fun signOut(){
-        shoppingListRepositoryImpl.signOut()
+        userRepositoryImpl.signOut()
     }
     fun deleteAccount(){
-        shoppingListRepositoryImpl.deleteAccount()
+        userRepositoryImpl.deleteAccount()
     }
     fun changePassword(password: String, oldPassword : String, email : String){
-        shoppingListRepositoryImpl.changePassword(password = password, oldPassword = oldPassword, email = email)
+        userRepositoryImpl.changePassword(password = password, oldPassword = oldPassword, email = email)
     }
     fun changeEmail(email : String, oldEmail: String, password: String){
-        shoppingListRepositoryImpl.changeEmail(email, oldEmail, password)
+        userRepositoryImpl.changeEmail(email, oldEmail, password)
         setEmailState(email = email); }
     }

@@ -8,5 +8,6 @@ data class Recipe(
     val directions : String = "",
     val category : String = "",
     val ingredients : ImmutableList<Ingredient> = ImmutableList.of(),
-    val image : String = ""
+    val image : String = "",
+    val userId : String = ""
 )

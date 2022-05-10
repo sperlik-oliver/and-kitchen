@@ -24,6 +24,7 @@ import java.util.logging.Level.INFO
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.scale
 import com.google.firebase.auth.FirebaseAuth
+import tech.sperlikoliver.and_kitchen.View.Misc.NavigationIcon
 
 
 @Composable
@@ -36,9 +37,7 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
         }
         if (FirebaseAuth.getInstance().currentUser != null) {
             Row(modifier = Modifier.weight(3f), horizontalArrangement = Arrangement.End) {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Filled.Search, "Search")
-                }
+
                 NavigationIcon(
                     navController = navController,
                     currentRoute = currentRoute,
@@ -49,8 +48,6 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
 
 
             }
-        } else {
-
         }
 
         }
@@ -59,18 +56,16 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
 
 @Composable
 fun TopBarTitle(currentRoute : String?){
-    val title : String
-    when(currentRoute){
-        "settings" -> title = "settings"
-        "shoppingList" -> title = "shopping list"
-        "recipes" -> title = "recipes"
-        "mealPlanner" -> title = "meal planner"
-        "login" -> title = "Kitchen"
+    val title = when(currentRoute){
+        "settings" -> "settings"
+        "shoppingList" -> "shopping list"
+        "recipes" -> "recipes"
+        "mealPlanner" -> "meal planner"
+        "login" -> "Kitchen"
         else -> {
-            title = "error"
+            "error"
         }
     }
-
     Text(text = title.uppercase(), color = MaterialTheme.colors.primaryVariant, modifier = Modifier.padding(5.dp))
 }
 

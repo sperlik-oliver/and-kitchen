@@ -5,21 +5,30 @@ import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
-import tech.sperlikoliver.and_kitchen.Model.Repository.ShoppingListRepositoryImpl
+import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.ShoppingListRepositoryImpl
+import tech.sperlikoliver.and_kitchen.Model.Repository.Interface.IShoppingListRepository
 import java.beans.PropertyChangeListener
 
 class ShoppingListViewModel: ViewModel() {
-    private val shoppingListRepositoryImpl : ShoppingListRepositoryImpl = ShoppingListRepositoryImpl()
-    private val _shoppingListFlow = MutableStateFlow<ImmutableList<ShoppingListItem>>(ImmutableList.of())
-    val shoppingList : StateFlow<ImmutableList<ShoppingListItem>> get() = _shoppingListFlow
+
+    private val shoppingListRepositoryImpl : IShoppingListRepository = ShoppingListRepositoryImpl()
+
+    private val _shoppingListFlow = MutableStateFlow<MutableList<ShoppingListItem>>(mutableListOf())
+
+    val shoppingList : StateFlow<MutableList<ShoppingListItem>> get() = _shoppingListFlow
 
 
-    fun setShoppingList (shoppingList : ImmutableList<ShoppingListItem>) {
+    private fun setShoppingList (shoppingList : MutableList<ShoppingListItem>) {
         _shoppingListFlow.value = shoppingList
     }
+
     init{
+        addShoppingListListener()
+    }
+
+    private fun addShoppingListListener(){
         shoppingListRepositoryImpl.addPropertyChangeListener(PropertyChangeListener {
-            event -> setShoppingList(event.newValue as ImmutableList<ShoppingListItem>)
+                event -> setShoppingList(event.newValue as MutableList<ShoppingListItem>)
         })
     }
 
