@@ -35,6 +35,9 @@ import com.google.common.collect.ImmutableList
 @Composable
 fun ShoppingList (navController: NavController) {
 
+
+
+
     var addingItemField by remember {
         mutableStateOf("")
     }
@@ -70,7 +73,7 @@ Column (modifier = Modifier.fillMaxSize(1f)){
 }
 
 @Composable
-fun ShoppingListLazyCol(shoppingList : MutableList<ShoppingListItem>, completed : Boolean, viewModel: ShoppingListViewModel){
+private fun ShoppingListLazyCol(shoppingList : MutableList<ShoppingListItem>, completed : Boolean, viewModel: ShoppingListViewModel){
     var showList : Boolean by remember { mutableStateOf(true) }
     val titleText = if (completed) { "Completed" } else { "Pending" }
     Column {
@@ -115,7 +118,7 @@ if (showList) {
 
 
 @Composable
-fun ShoppingListItem(item: ShoppingListItem, viewModel: ShoppingListViewModel) {
+private fun ShoppingListItem(item: ShoppingListItem, viewModel: ShoppingListViewModel) {
     Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
         Row (verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(4f)){
             IconButton(onClick =

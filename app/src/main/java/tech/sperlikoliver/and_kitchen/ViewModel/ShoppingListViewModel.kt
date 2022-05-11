@@ -1,5 +1,6 @@
 package tech.sperlikoliver.and_kitchen.ViewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.common.collect.ImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,9 +10,11 @@ import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.ShoppingLi
 import tech.sperlikoliver.and_kitchen.Model.Repository.Interface.IShoppingListRepository
 import java.beans.PropertyChangeListener
 
+private const val TAG = "ShoppingListViewModel"
+
 class ShoppingListViewModel: ViewModel() {
 
-    private val shoppingListRepositoryImpl : IShoppingListRepository = ShoppingListRepositoryImpl()
+    private val repository : IShoppingListRepository = ShoppingListRepositoryImpl()
 
     private val _shoppingListFlow = MutableStateFlow<MutableList<ShoppingListItem>>(mutableListOf())
 
@@ -24,25 +27,25 @@ class ShoppingListViewModel: ViewModel() {
 
     init{
         addShoppingListListener()
+        repository.getShoppingList()
     }
 
     private fun addShoppingListListener(){
-        shoppingListRepositoryImpl.addPropertyChangeListener(PropertyChangeListener {
+        repository.addPropertyChangeListener(PropertyChangeListener {
                 event -> setShoppingList(event.newValue as MutableList<ShoppingListItem>)
         })
     }
 
-
     fun deleteShoppingListItem(shoppingListItem: ShoppingListItem) {
-        shoppingListRepositoryImpl.deleteShoppingListItem(shoppingListItem)
+        repository.deleteShoppingListItem(shoppingListItem)
     }
 
     fun createShoppingListItem(shoppingListItem: ShoppingListItem) {
-        shoppingListRepositoryImpl.createShoppingListItem(shoppingListItem)
+        repository.createShoppingListItem(shoppingListItem)
     }
 
     fun editShoppingListItem(shoppingListItem: ShoppingListItem){
-        shoppingListRepositoryImpl.editShoppingListItem(shoppingListItem)
+        repository.editShoppingListItem(shoppingListItem)
         }
 
 }

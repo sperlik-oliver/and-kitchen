@@ -7,7 +7,8 @@ data class Recipe(
     val name : String = "",
     val directions : String = "",
     val category : String = "",
-    val ingredients : ImmutableList<Ingredient> = ImmutableList.of(),
-    val image : String = "",
+    val description : String = "",
+    val ingredients : MutableList<String> = mutableListOf(),
+//    val image : String = "",
     val userId : String = ""
 )

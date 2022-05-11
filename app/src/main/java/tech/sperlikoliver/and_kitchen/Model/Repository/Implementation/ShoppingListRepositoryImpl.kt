@@ -13,6 +13,8 @@ import tech.sperlikoliver.and_kitchen.Model.Repository.Interface.IShoppingListRe
 import tech.sperlikoliver.and_kitchen.Model.Utility.PropertyChangeAware
 import java.beans.PropertyChangeSupport
 
+private const val TAG : String = "ShoppingListRepositoryImpl"
+
 class ShoppingListRepositoryImpl : IShoppingListRepository {
 
 
@@ -20,52 +22,59 @@ class ShoppingListRepositoryImpl : IShoppingListRepository {
     private val database: FirebaseFirestore = Firebase.firestore
     private val shoppingListRef = database.collection("shopping_list")
 
-
-    init {
-        addShoppingListListener()
-    }
-
-    private fun addShoppingListListener(){
-        shoppingListRef.whereEqualTo("userId", FirebaseAuth.getInstance().currentUser?.uid).addSnapshotListener (MetadataChanges.EXCLUDE) { snapshot, e ->
-            if (snapshot != null && snapshot.documents.isNotEmpty()) {
-                var shoppingList: MutableList<ShoppingListItem> = mutableListOf()
-
-                for (document in snapshot) {
-                    var shoppingListItem = ShoppingListItem(id = document.id, document.data["name"] as String, completed = document.data["completed"] as Boolean, userId = document.data["userId"] as String)
+    override fun getShoppingList(){
+        val propertyName = "shopping_list"
+        val shoppingList : MutableList<ShoppingListItem> = mutableListOf()
+        shoppingListRef.whereEqualTo("userId", FirebaseAuth.getInstance().currentUser?.uid).get().addOnCompleteListener { shoppingListSnapshot ->
+            val shoppingListResult = shoppingListSnapshot.result
+                if(!shoppingListSnapshot.isSuccessful) {
+                    shoppingListSnapshot.exception?.message?.let{Log.e(TAG, it)}
+                    return@addOnCompleteListener
+                }
+                if (shoppingListResult == null){
+                    Log.e(TAG, "Shopping list snapshot is null")
+                    return@addOnCompleteListener
+                }
+                if (shoppingListResult.isEmpty){
+                    propertyChangeSupport.firePropertyChange(propertyName, null, shoppingList)
+                    return@addOnCompleteListener
+                }
+                for (shoppingListItemDocument in shoppingListResult) {
+                    val shoppingListItem = ShoppingListItem(
+                        id = shoppingListItemDocument.id,
+                        name = shoppingListItemDocument.data["name"] as String,
+                        completed = shoppingListItemDocument.data["completed"] as Boolean,
+                        userId = shoppingListItemDocument.data["userId"] as String
+                    )
                     shoppingList.add(shoppingListItem)
                 }
-                propertyChangeSupport.firePropertyChange("shopping_list", null, shoppingList)
-            } else if (snapshot != null && snapshot.documents.isEmpty()){
-                var shoppingList: MutableList<ShoppingListItem> = mutableListOf()
-                propertyChangeSupport.firePropertyChange("shopping_list", null, shoppingList)
-            } else if (e != null) {
-                Log.d("Firebase error: ", "Cannot retrieve data")
-            } else {
-                Log.d("Snapshot: ", "Current snapshot is null")
+                propertyChangeSupport.firePropertyChange(propertyName, null, shoppingList)
             }
-        }
     }
 
     override fun createShoppingListItem(shoppingListItem : ShoppingListItem){
-        val data = hashMapOf(
+        val shoppingListItemData = hashMapOf(
             "name" to shoppingListItem.name,
             "completed" to shoppingListItem.completed,
             "userId" to FirebaseAuth.getInstance().currentUser?.uid
         )
-        shoppingListRef.add(data)
+        shoppingListRef.add(shoppingListItemData)
+        getShoppingList()
     }
 
     override fun editShoppingListItem(shoppingListItem: ShoppingListItem){
-        val data = hashMapOf(
+        val shoppingListItemData = hashMapOf(
             "name" to shoppingListItem.name,
             "completed" to !shoppingListItem.completed,
             "userId" to FirebaseAuth.getInstance().currentUser?.uid
         )
-        shoppingListRef.document(shoppingListItem.id).set(data)
+        shoppingListRef.document(shoppingListItem.id).set(shoppingListItemData)
+        getShoppingList()
     }
 
     override fun deleteShoppingListItem(shoppingListItem: ShoppingListItem){
         shoppingListRef.document(shoppingListItem.id).delete()
+        getShoppingList()
     }
 
 

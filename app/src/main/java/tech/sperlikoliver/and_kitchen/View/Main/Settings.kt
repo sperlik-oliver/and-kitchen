@@ -22,6 +22,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
+import tech.sperlikoliver.and_kitchen.View.Utility.NavUtility
 import tech.sperlikoliver.and_kitchen.ViewModel.ShoppingListViewModel
 
 @Composable
@@ -141,24 +142,21 @@ fun Settings(navController: NavController){
         }
 
         Button(onClick = {
-            val navBuilder = NavOptions.Builder()
-            val navOptions : NavOptions = navBuilder.setPopUpTo("login", true).build()
-            navController.navigate("login", navOptions)
+            NavUtility.SetPopUpToNav("login", navController)
             viewModel.signOut()
         }, modifier=Modifier.padding(15.dp)){
             Text(text = "Sign Out")
         }
         Button(onClick = {
-            val navBuilder = NavOptions.Builder()
-            val navOptions : NavOptions = navBuilder.setPopUpTo("login", true).build()
-            navController.navigate("login", navOptions)
+            NavUtility.SetPopUpToNav("login", navController)
             viewModel.deleteAccount()
         }, modifier= Modifier
             .padding(15.dp)
             .background(color = MaterialTheme.colors.secondary)){
             Text(text = "Delete account")
         }
-    } 
-
-
     }
+
+}
+
+
