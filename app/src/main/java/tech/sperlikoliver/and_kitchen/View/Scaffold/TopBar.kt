@@ -34,7 +34,7 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
 
 
     TopAppBar(backgroundColor = MaterialTheme.colors.background){
-        Row(modifier = Modifier.weight(2f), horizontalArrangement = Arrangement.Start){
+        Row(modifier = Modifier.weight(5f), horizontalArrangement = Arrangement.Start){
             TopBarTitle(navController = navController, currentRoute = currentRoute)
         }
         if (FirebaseAuth.getInstance().currentUser != null) {
@@ -67,12 +67,20 @@ private fun TopBarTitle(navController: NavController, currentRoute : String?){
         "viewRecipe/{id}" -> "recipes"
         "editRecipe/{id}" -> "recipes"
         "addRecipe" -> "recipes"
+        "viewMealPlannerEntry/{id}" -> "meal planner"
+        "editMealPlannerEntry/{id}" -> "meal planner"
+        "addMealPlannerEntry" -> "meal planner"
         else -> {
             "error"
         }
     }
     Row(verticalAlignment = Alignment.CenterVertically){
-        if (currentRoute == "addRecipe" || currentRoute == "editRecipe/{id}" || currentRoute == "viewRecipe/{id}"){
+        if (currentRoute == "addRecipe" ||
+            currentRoute == "editRecipe/{id}" ||
+            currentRoute == "viewRecipe/{id}" ||
+            currentRoute == "addMealPlannerEntry" ||
+            currentRoute == "editMealPlannerEntry/{id}" ||
+            currentRoute == "viewMealPlannerEntry/{id}"){
             IconButton(onClick = { navController.navigateUp() }) {
                 Icon(Icons.Filled.ArrowBack, "Go back", tint = MaterialTheme.colors.primary)
             }

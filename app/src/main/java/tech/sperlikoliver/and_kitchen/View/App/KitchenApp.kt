@@ -24,6 +24,7 @@ import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.FirebaseAuth
 import tech.sperlikoliver.and_kitchen.View.*
+import tech.sperlikoliver.and_kitchen.View.Scaffold.FABWrapper
 import tech.sperlikoliver.and_kitchen.View.Scaffold.Login
 import tech.sperlikoliver.and_kitchen.View.Theme.And_kitchenTheme
 
@@ -60,7 +61,7 @@ fun KitchenApp(){
         Scaffold(
             topBar = { TopBarView(navController = navController, currentRoute = currentRoute)},
             bottomBar = { BottomBarView(navController = navController, currentRoute = currentRoute)},
-            floatingActionButton ={ FABWrapper(navController = navController, currentRoute = currentRoute)}
+            floatingActionButton = { FABWrapper(navController = navController, currentRoute = currentRoute)}
         ) {
             NavHost(navController = navController, startDestination = startDestination) {
                 composable("login") { Login(navController = navController) }
@@ -83,19 +84,27 @@ fun KitchenApp(){
                     EditRecipe(navController = navController, recipeId = it.arguments?.getString("id")!!)
                 }
                 composable("addRecipe"){AddRecipe(navController)}
+                composable("editMealPlannerEntry/{id}", arguments = listOf(
+                    navArgument("id"){
+                        type = NavType.StringType
+                    }
+                )){
+                    EditMealPlannerEntry(navController = navController, mealPlannerEntryId = it.arguments?.getString("id")!!)
+                }
+                composable("viewMealPlannerEntry/{id}", arguments = listOf(
+                    navArgument("id"){
+                        type = NavType.StringType
+                    }
+                )){
+                    ViewMealPlannerEntry(navController = navController, mealPlannerEntryId = it.arguments?.getString("id")!!)
+                }
+                composable("addMealPlannerEntry"){AddMealPlannerEntry(navController)}
             }
         }
     }
 }
 
-@Composable
-fun FABWrapper(navController: NavController, currentRoute : String?){
-    if (currentRoute == "recipes"){
-        FloatingActionButton(onClick = { navController.navigate("addRecipe") }, backgroundColor = MaterialTheme.colors.primary) {
-            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add Recipe")
-        }
-    }
-}
+
 
 
 

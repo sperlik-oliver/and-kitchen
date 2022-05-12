@@ -65,7 +65,7 @@ class RecipesViewModel(recipeId : String = "") : ViewModel() {
             }
             if (event.propertyName == "recipe"){
                 val newRecipe = event.newValue as Recipe
-                setRecipe(event.newValue as Recipe)
+                setRecipe(newRecipe)
                 setNameField(newRecipe.name)
                 setCategoryField(newRecipe.category)
                 setDescriptionField(newRecipe.description)
