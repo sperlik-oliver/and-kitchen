@@ -23,6 +23,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.FirebaseAuth
+import tech.sperlikoliver.and_kitchen.Model.Utility.mAuth
 import tech.sperlikoliver.and_kitchen.View.*
 import tech.sperlikoliver.and_kitchen.View.Scaffold.FABWrapper
 import tech.sperlikoliver.and_kitchen.View.Scaffold.Login
@@ -50,7 +51,7 @@ fun KitchenApp(){
     val currentRoute = navBackStackEntry?.destination?.route
 
     // Start destination setup
-    var startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
+    var startDestination = if (FirebaseAuth.getInstance().currentUser != null || mAuth.get()) {
         "recipes"
     } else {
         "login"

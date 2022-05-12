@@ -1,35 +1,19 @@
 package tech.sperlikoliver.and_kitchen.View
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
-import android.service.controls.ControlsProviderService.TAG
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.ShoppingListItem
 import tech.sperlikoliver.and_kitchen.ViewModel.ShoppingListViewModel
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.google.common.collect.ImmutableList
 
 
 @Composable

@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.5.21"
+    id "org.jetbrains.kotlin.kapt"
 }
 
 android {
@@ -52,8 +54,9 @@ dependencies {
     def roomVersion = "2.4.2"
 
     implementation("androidx.room:room-runtime:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
 
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1"
 
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$roomVersion")

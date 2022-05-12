@@ -3,8 +3,8 @@ package tech.sperlikoliver.and_kitchen.ViewModel
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import tech.sperlikoliver.and_kitchen.Model.Domain.MealPlannerEntry
-import tech.sperlikoliver.and_kitchen.Model.Domain.Recipe
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.MealPlannerEntry
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.Recipe
 import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.MealPlannerRepositoryImpl
 import tech.sperlikoliver.and_kitchen.Model.Repository.Implementation.RecipesRepositoryImpl
 import tech.sperlikoliver.and_kitchen.Model.Repository.Interface.IMealPlannerRepository

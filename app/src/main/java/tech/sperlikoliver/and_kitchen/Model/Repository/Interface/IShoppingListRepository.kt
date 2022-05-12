@@ -1,6 +1,6 @@
 package tech.sperlikoliver.and_kitchen.Model.Repository.Interface
 
-import tech.sperlikoliver.and_kitchen.Model.Domain.ShoppingListItem
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.ShoppingListItem
 import tech.sperlikoliver.and_kitchen.Model.Utility.PropertyChangeAware
 
 interface IShoppingListRepository : PropertyChangeAware {

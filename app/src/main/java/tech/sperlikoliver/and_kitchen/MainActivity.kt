@@ -27,6 +27,8 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import tech.sperlikoliver.and_kitchen.Model.KitchenDatabase
+import tech.sperlikoliver.and_kitchen.Model.Utility.mAuth
 import tech.sperlikoliver.and_kitchen.View.MealPlanner
 import tech.sperlikoliver.and_kitchen.View.Recipes
 import tech.sperlikoliver.and_kitchen.View.ShoppingList
@@ -37,6 +39,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
+        KitchenDatabase.initialize(this)
+        mAuth.initialize(this)
 
         setContent {
 

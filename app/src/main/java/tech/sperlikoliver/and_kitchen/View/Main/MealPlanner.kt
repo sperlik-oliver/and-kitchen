@@ -3,8 +3,6 @@ package tech.sperlikoliver.and_kitchen.View
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.util.Log
-import android.util.Size
 import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,14 +20,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius.Companion.Zero
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import tech.sperlikoliver.and_kitchen.Model.Domain.MealPlannerEntry
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.MealPlannerEntry
 import tech.sperlikoliver.and_kitchen.ViewModel.MealPlannerViewModel
-import tech.sperlikoliver.and_kitchen.ViewModel.RecipesViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -38,7 +34,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.toSize
 import com.google.firebase.auth.FirebaseAuth
-import tech.sperlikoliver.and_kitchen.Model.Domain.Recipe
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.Recipe
 
 @Composable
 fun MealPlanner(navController: NavController){
@@ -285,8 +281,7 @@ fun EditMealPlannerEntry(navController: NavController, mealPlannerEntryId: Strin
             val mealPlannerEntry = MealPlannerEntry(
                 id = mealPlannerEntryId,
                 dateTime = dateTime,
-                recipeId = selectedRecipe.id,
-                userId = FirebaseAuth.getInstance().currentUser?.uid!!
+                recipeId = selectedRecipe.id
             )
 
             viewModel.editMealPlannerEntry(mealPlannerEntry)
@@ -466,8 +461,7 @@ fun AddMealPlannerEntry(navController: NavController){
             }
             val mealPlannerEntry = MealPlannerEntry(
                 dateTime = dateTime,
-                recipeId = selectedRecipe.id,
-                userId = FirebaseAuth.getInstance().currentUser?.uid!!
+                recipeId = selectedRecipe.id
             )
             viewModel.createMealPlannerEntry(mealPlannerEntry)
             navController.navigateUp()

@@ -1,6 +1,6 @@
 package tech.sperlikoliver.and_kitchen.Model.Repository.Interface
 
-import tech.sperlikoliver.and_kitchen.Model.Domain.MealPlannerEntry
+import tech.sperlikoliver.and_kitchen.Model.Domain.Repository.MealPlannerEntry
 import tech.sperlikoliver.and_kitchen.Model.Utility.PropertyChangeAware
 
 interface IMealPlannerRepository : PropertyChangeAware{

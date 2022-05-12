@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import com.google.firebase.auth.FirebaseAuth
+import tech.sperlikoliver.and_kitchen.Model.Utility.mAuth
 import tech.sperlikoliver.and_kitchen.View.Misc.NavigationIcon
 
 
@@ -37,7 +38,7 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
         Row(modifier = Modifier.weight(5f), horizontalArrangement = Arrangement.Start){
             TopBarTitle(navController = navController, currentRoute = currentRoute)
         }
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        if (FirebaseAuth.getInstance().currentUser != null || mAuth.get()) {
             Row(modifier = Modifier.weight(3f), horizontalArrangement = Arrangement.End) {
 
                 NavigationIcon(
