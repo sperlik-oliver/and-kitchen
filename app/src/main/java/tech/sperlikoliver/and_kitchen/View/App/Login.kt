@@ -1,6 +1,5 @@
-package tech.sperlikoliver.and_kitchen.View.Scaffold
+package tech.sperlikoliver.and_kitchen.View.App.Scaffold
 
-import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -15,19 +14,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.google.firebase.auth.FirebaseAuth
-import tech.sperlikoliver.and_kitchen.Model.Utility.mAuth
-import tech.sperlikoliver.and_kitchen.View.Utility.NavUtility
+import tech.sperlikoliver.and_kitchen.Model.App.AnonymousAuth
+import tech.sperlikoliver.and_kitchen.View.App.Navigation.NavUtility
 
 private const val TAG : String = "Login"
 
 @Composable
 fun Login(navController: NavController){
 
-    if (FirebaseAuth.getInstance().currentUser != null || mAuth.get()) {
+    if (FirebaseAuth.getInstance().currentUser != null || AnonymousAuth.get()) {
         NavUtility.SetPopUpToNav("recipes", navController)
     }
 
@@ -41,7 +39,7 @@ fun Login(navController: NavController){
                 Text(text = "Sign In")
             }
             Button(onClick = {
-                mAuth.set(true)
+                AnonymousAuth.set(true)
                 NavUtility.SetPopUpToNav("recipes", navController)
             }, Modifier.padding(horizontal = 10.dp)){
                 Text(text = "Continue anonymously")
@@ -60,7 +58,7 @@ fun signIn(){
     val launcher = rememberLauncherForActivityResult(contract = FirebaseAuthUIActivityResultContract(), onResult = { result ->
         val response = result.idpResponse
         if (result.resultCode != RESULT_OK) {
-            Log.i(TAG, "Error: ${response?.error?.message}")
+            Log.i("Sign In", "Error: ${response?.error?.message}")
         }
     })
     val providers = arrayListOf(

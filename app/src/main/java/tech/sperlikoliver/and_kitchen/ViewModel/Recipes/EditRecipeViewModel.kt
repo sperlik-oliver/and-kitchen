@@ -1,32 +1,14 @@
-package tech.sperlikoliver.and_kitchen.ViewModel
+package tech.sperlikoliver.and_kitchen.ViewModel.Recipes
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
-import tech.sperlikoliver.and_kitchen.Model.Firebase.Repository.RecipesRepositoryFirebase
-import tech.sperlikoliver.and_kitchen.Model.Interface.IRecipesRepository
 import tech.sperlikoliver.and_kitchen.Model.Proxy.RecipesRepositoryProxy
-import tech.sperlikoliver.and_kitchen.Model.Retrofit.Repository.RecipesRepositoryRetrofit
 import java.beans.PropertyChangeListener
 
-private const val TAG : String = "RecipesViewModel"
-
-class RecipesViewModel(recipeId : String = "") : ViewModel() {
-
+class EditRecipeViewModel(recipeId : String) : ViewModel() {
     private val repository : RecipesRepositoryProxy = RecipesRepositoryProxy()
-    
-    private val _recipesFlow = MutableStateFlow<MutableList<Recipe>>(mutableListOf())
-    val recipes : StateFlow<MutableList<Recipe>> get() = _recipesFlow
-    private fun setRecipes (recipes : MutableList<Recipe>){ _recipesFlow.value = recipes }
-
-    private val _recipeFlow = MutableStateFlow<Recipe>(Recipe())
-    val recipe : StateFlow<Recipe> get() = _recipeFlow
-    private fun setRecipe(recipe : Recipe){_recipeFlow.value = recipe}
-
-    private val _generatedRecipeFlow = MutableStateFlow<Recipe>(Recipe())
-    val generatedRecipe : StateFlow<Recipe> get() = _generatedRecipeFlow
-    fun setGeneratedRecipe(recipe : Recipe){_generatedRecipeFlow.value = recipe}
 
     private val _nameFieldFlow = MutableStateFlow("")
     private val _categoryFieldFlow = MutableStateFlow("")
@@ -49,24 +31,17 @@ class RecipesViewModel(recipeId : String = "") : ViewModel() {
     fun setDirectionsField(directions : String){_directionsFieldFlow.value = directions}
     fun setAddedIngredients(addedIngredients : MutableList<String>){_addedIngredientsFlow.value = addedIngredients}
 
-
-    init{
+    init {
         addRecipesListener()
-        repository.getRecipes()
-        if (recipeId != ""){
-            getRecipe(recipeId)
-        }
+        repository.getRecipe(recipeId)
     }
 
     private fun addRecipesListener() {
         repository.addPropertyChangeListener(PropertyChangeListener{
-            event ->
-            if(event.propertyName == "recipes") {
-                setRecipes(event.newValue as MutableList<Recipe>)
-            }
+                event ->
+
             if (event.propertyName == "recipe"){
                 val newRecipe = event.newValue as Recipe
-                setRecipe(newRecipe)
                 setNameField(newRecipe.name)
                 setCategoryField(newRecipe.category)
                 setDescriptionField(newRecipe.description)
@@ -74,33 +49,14 @@ class RecipesViewModel(recipeId : String = "") : ViewModel() {
                 setDirectionsField(newRecipe.directions)
                 setAddedIngredients(newRecipe.ingredients)
             }
-            if(event.propertyName == "generated_recipe"){
-                val newRecipe = event.newValue as Recipe
-                setGeneratedRecipe(newRecipe)
-            }
         })
-    }
-
-    fun getRandomRecipe(){
-        repository.getRandomRecipe()
     }
 
     fun getRecipe(recipeId : String){
         repository.getRecipe(recipeId)
     }
 
-    fun createRecipe(recipe : Recipe){
-        repository.createRecipe(recipe)
-    }
     fun editRecipe(recipe : Recipe){
         repository.editRecipe(recipe)
     }
-    fun deleteRecipe(recipe : Recipe){
-        repository.deleteRecipe(recipe)
-    }
-
-
-    
-
-
 }
