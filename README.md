@@ -1,9 +1,8 @@
 # kitchen-and
 
 
-<b><a href="https://youtu.be/WEidyl6PcXs">Video</a></b> </br>We have also presented the app in class :) </br></br> <b>Members</b></br>Oliver Sperlik, Tomas Brezny, Adam Halama, Tymon Podlowski </br></br> <b>Idea</b>
-
-
+<b><a href="https://youtu.be/WEidyl6PcXs">Video</a></b> </br>We have also presented the app in class :) </br></br> <b>Members</b></br>Oliver Sperlik, Tomas Brezny, Adam Halama, Tymon Podlowski </br></br>
+<b>Idea</b>
 The goal of this application is to improve the user's experience when it comes to cooking by allowing the storage of ingredients, recipes and meal plans all in one place. The application aims to provide the user with some quality of life features that will simplify the interactions between ingredients, recipes and meal planning.
 
 
