@@ -12,8 +12,8 @@ interface RecipeDao {
     fun getRandomRecipe() : Call<String>
 
     companion object{
-        private val BASE_URL = "https://api.spoonacular.com/"
-        private const val API_KEY = "f6027bb4ede247fea685dbb1079c759b"
+        private const val BASE_URL = "https://api.spoonacular.com/"
+
 
 
         fun initialize() : RecipeDao {

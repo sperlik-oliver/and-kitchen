@@ -1,5 +1,7 @@
 package tech.sperlikoliver.and_kitchen.Model.Room.Repository
 
+import android.util.Log
+import kotlinx.coroutines.Delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
@@ -31,12 +33,13 @@ class RecipesRepositoryRoom : IRecipesRepository{
             }
             propertyChangeSupport.firePropertyChange(propertyName, null, recipes)
         } }
+
     }
 
     override fun getRecipe(recipeId: String) {
         val propertyName = "recipe"
         runBlocking { launch {
-            val retrievedRecipe = recipeDao.getRecipe(recipeId.toLong())
+            val retrievedRecipe : RecipeRoom = recipeDao.getRecipe(recipeId.toLong())
             val recipe = Recipe(
                 id = retrievedRecipe.id.toString(),
                 name = retrievedRecipe.name,

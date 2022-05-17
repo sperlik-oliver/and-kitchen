@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.MealPlannerEntry
+import tech.sperlikoliver.and_kitchen.View.Main.MealPlanner.Utility.DateTimeFormat
 import tech.sperlikoliver.and_kitchen.ViewModel.MealPlanner.MealPlannerViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -46,16 +47,13 @@ fun MealPlanner(navController: NavController){
 @Composable
 private fun MealPlannerEntry(mealPlannerEntry : MealPlannerEntry, viewModel: MealPlannerViewModel, navController: NavController){
     val id = mealPlannerEntry.id
-    val date : Date = Date(mealPlannerEntry.dateTime * 1000)
-    val format : DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm");
-    val formattedDate : String = format.format(date)
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Start, modifier = Modifier.weight(6.5f)){
             IconButton(onClick = { navController.navigate("editMealPlannerEntry/$id")}) {
                 Icon(Icons.Filled.Edit, "Edit Meal Planner Entry", tint = MaterialTheme.colors.primary)
             }
             Button(onClick = {navController.navigate("viewMealPlannerEntry/$id")}) {
-                Text(text = formattedDate, modifier= Modifier.fillMaxWidth())
+                Text(text = DateTimeFormat.parseEpochToString(mealPlannerEntry.dateTime), modifier= Modifier.fillMaxWidth())
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End, modifier = Modifier.weight(1f)){

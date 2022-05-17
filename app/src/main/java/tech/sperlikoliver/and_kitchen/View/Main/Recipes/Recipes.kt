@@ -26,8 +26,8 @@ fun Recipes(navController: NavController){
         RecipesViewModel()
     }
 
-
     val recipes = viewModel.recipes.collectAsState()
+
     LazyColumn(modifier = Modifier.padding(7.dp)) {
         items(recipes.value) { recipe ->
             Recipe(recipe, viewModel, navController)

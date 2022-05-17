@@ -18,7 +18,9 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.google.type.DateTime
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
+import tech.sperlikoliver.and_kitchen.View.Main.MealPlanner.Utility.DateTimeFormat
 import tech.sperlikoliver.and_kitchen.ViewModel.MealPlanner.EditMealPlannerViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,30 +75,14 @@ fun EditMealPlannerEntry(navController: NavController, mealPlannerEntryId: Strin
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            if(mDayOfMonth < 10 && mMonth < 10){
-                viewModel.setMDate("0$mDayOfMonth/0${mMonth+1}/$mYear")
-            } else if (mDayOfMonth < 10 && mMonth >= 10){
-                viewModel.setMDate("0$mDayOfMonth/${mMonth+1}/$mYear")
-            } else if (mDayOfMonth >= 10 && mMonth < 10){
-                viewModel.setMDate("$mDayOfMonth/0${mMonth+1}/$mYear")
-            } else {
-                viewModel.setMDate("$mDayOfMonth/${mMonth+1}/$mYear")
-            }
+            viewModel.setMDate(DateTimeFormat.parseDayMonthYearToDate(mDayOfMonth, mMonth, mYear))
         }, mYear, mMonth, mDay
     )
 
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            if(mMinute < 10 && mHour < 10){
-                viewModel.setMTime("0$mHour:0$mMinute")
-            } else if (mMinute < 10 && mHour >= 10){
-                viewModel.setMTime("$mHour:0$mMinute")
-            } else if (mMinute >= 10 && mHour < 10){
-                viewModel.setMTime("0$mHour:$mMinute")
-            } else {
-                viewModel.setMTime("$mHour:$mMinute")
-            }
+            viewModel.setMTime(DateTimeFormat.parseHourAndMinToTime(mHour, mMinute))
         }, mHour, mMinute, true
     )
 
@@ -178,9 +164,7 @@ fun EditMealPlannerEntry(navController: NavController, mealPlannerEntryId: Strin
             }
         }
         Button(onClick = {
-            val date = mDate.value + " " + mTime.value
-            val dateFormatted : Date = SimpleDateFormat("dd/MM/yyyy HH:mm").parse(date)
-            val dateTime : Long = dateFormatted.time/1000
+            val dateTime = DateTimeFormat.parseStringToEpoch(mDate.value, mTime.value)
             var selectedRecipe : Recipe = Recipe()
             for (recipe in recipes.value){
                 if (recipe.name == mSelectedText.value){

@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.ViewModel.Recipes.ViewRecipeViewModel
-import tech.sperlikoliver.and_kitchen.ViewModel.RecipesViewModel
 
 @Composable
 fun ViewRecipe(navController: NavController, recipeId : String){

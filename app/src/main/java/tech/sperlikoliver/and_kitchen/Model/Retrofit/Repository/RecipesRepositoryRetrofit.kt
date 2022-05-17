@@ -11,53 +11,23 @@ import tech.sperlikoliver.and_kitchen.Model.App.PropertyChangeAware
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
 import tech.sperlikoliver.and_kitchen.Model.Retrofit.DAO.RecipeDao
 import tech.sperlikoliver.and_kitchen.Model.Retrofit.Entity.RecipeListRetrofit
-import tech.sperlikoliver.and_kitchen.Model.Retrofit.Utility.HtmlParser
+import tech.sperlikoliver.and_kitchen.Model.Retrofit.Utility.Parser
 import java.beans.PropertyChangeSupport
 
 class RecipesRepositoryRetrofit : PropertyChangeAware{
+
     override val propertyChangeSupport: PropertyChangeSupport = PropertyChangeSupport(this)
     private val recipeDao = RecipeDao.initialize()
 
     fun getRandomRecipe(){
-        Log.i("Retrofit", "get Random Recipe")
         val propertyName = "generated_recipe"
         val getRandomRecipe = recipeDao.getRandomRecipe()
         getRandomRecipe.enqueue(object : retrofit2.Callback<String>{
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.body() != null){
-                    val format = Json { isLenient = true; ignoreUnknownKeys = true; coerceInputValues = true }
-                    val wrapper = format.decodeFromString<RecipeListRetrofit>(response.body()!!)
-                    val data = wrapper.recipes.first()
-                    var category = ""
-                    val ingredients = mutableListOf<String>()
-                    for ((c, s) in data.dishTypes.withIndex()){
-                        category += if (c < data.dishTypes.size-1) {
-                            "$s, "
-                        }else {
-                            "$s"
-                        }
-                    }
-                    for (i in data.extendedIngredientRetrofits){
-                        ingredients.add(i.original)
-                    }
-                    var userId : String
-                    if(!AnonymousAuth.get()) {
-                        userId = FirebaseAuth.getInstance().currentUser?.uid!!
-                    } else{
-                        userId = ""
-                    }
-                    val recipe = Recipe(
-                        name = data.title,
-                        directions = HtmlParser.removeTags(data.instructions),
-                        category = category,
-                        description = HtmlParser.removeTags(data.summary),
-                        ingredients = ingredients,
-                        userId = userId
-                    )
-                    propertyChangeSupport.firePropertyChange(propertyName, null, recipe)
+                    propertyChangeSupport.firePropertyChange(propertyName, null, Parser.deserializeRecipe(response.body()!!))
                 }
             }
-
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.e("RecipeRepositoryRetrofit", t.message!!)
             }

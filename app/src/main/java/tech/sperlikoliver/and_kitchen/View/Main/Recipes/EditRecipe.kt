@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
 import tech.sperlikoliver.and_kitchen.ViewModel.Recipes.EditRecipeViewModel
-import tech.sperlikoliver.and_kitchen.ViewModel.RecipesViewModel
+
 
 @Composable
 fun EditRecipe (navController: NavController, recipeId : String) {

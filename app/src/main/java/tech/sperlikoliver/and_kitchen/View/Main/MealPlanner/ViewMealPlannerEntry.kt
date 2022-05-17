@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import tech.sperlikoliver.and_kitchen.View.Main.MealPlanner.Utility.DateTimeFormat
 import tech.sperlikoliver.and_kitchen.ViewModel.MealPlanner.ViewMealPlannerViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -21,13 +22,10 @@ fun ViewMealPlannerEntry(navController: NavController, mealPlannerEntryId : Stri
     val viewModel : ViewMealPlannerViewModel = remember {
         ViewMealPlannerViewModel(mealPlannerEntryId)
     }
+
     val mealPlannerEntry = viewModel.mealPlannerEntry.collectAsState()
-    val date : Date = Date(mealPlannerEntry.value.dateTime * 1000)
-    val dateFormat : DateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm")
-    val timeFormat : DateFormat = SimpleDateFormat("HH:mm")
-    val formattedDate : String = dateFormat.format(date)
-    val formattedTime : String = timeFormat.format(date)
     val recipeId = mealPlannerEntry.value.recipeId
+
     Column(
         modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 15.dp)
@@ -35,11 +33,11 @@ fun ViewMealPlannerEntry(navController: NavController, mealPlannerEntryId : Stri
     ) {
         Column() {
             ViewMealPlannerTitle(title = "Date")
-            Text(formattedDate, Modifier.padding(top = 10.dp))
+            Text(DateTimeFormat.parseEpochToStringSeparate(mealPlannerEntry.value.dateTime)["date"]!!, Modifier.padding(top = 10.dp))
         }
         Column() {
             ViewMealPlannerTitle(title = "Time")
-            Text(formattedTime, Modifier.padding(top = 10.dp))
+            Text(DateTimeFormat.parseEpochToStringSeparate(mealPlannerEntry.value.dateTime)["time"]!!, Modifier.padding(top = 10.dp))
         }
         Column() {
             ViewMealPlannerTitle(title = "Recipe")

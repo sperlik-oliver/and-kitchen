@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import tech.sperlikoliver.and_kitchen.Model.Firebase.Entity.Recipe
+import tech.sperlikoliver.and_kitchen.View.Main.MealPlanner.Utility.DateTimeFormat
 import tech.sperlikoliver.and_kitchen.ViewModel.MealPlanner.AddMealPlannerViewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,11 +35,12 @@ fun AddMealPlannerEntry(navController: NavController){
 
     val recipes = viewModel.recipes.collectAsState()
 
+    // UI State for select field
     var mExpanded by remember { mutableStateOf(false) }
     var mSelectedText by remember { mutableStateOf("") }
     var mTextFieldSize by remember { mutableStateOf(Size.Zero) }
     // Declaring integer values
-    // for year, month and day
+    // for year, month, day, hour and minute
     val mYear: Int
     val mMonth: Int
     val mDay: Int
@@ -57,34 +59,19 @@ fun AddMealPlannerEntry(navController: NavController){
     // store date in string format
     val mDate = remember { mutableStateOf("") }
     val mTime = remember { mutableStateOf("") }
+
     // Declaring DatePickerDialog and setting
     // initial values as current values (present year, month and day)
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            if(mDayOfMonth < 10 && mMonth < 10){
-                mDate.value = "0$mDayOfMonth/0${mMonth+1}/$mYear"
-            } else if (mDayOfMonth < 10 && mMonth >= 10){
-                mDate.value = "0$mDayOfMonth/${mMonth+1}/$mYear"
-            } else if (mDayOfMonth >= 10 && mMonth < 10){
-                mDate.value = "$mDayOfMonth/0${mMonth+1}/$mYear"
-            } else {
-                mDate.value = "$mDayOfMonth/${mMonth+1}/$mYear"
-            }
+            mDate.value = DateTimeFormat.parseDayMonthYearToDate(mDayOfMonth, mMonth, mYear)
         }, mYear, mMonth, mDay
     )
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            if(mMinute < 10 && mHour < 10){
-                mTime.value = "0$mHour:0$mMinute"
-            } else if (mMinute < 10 && mHour >= 10){
-                mTime.value = "$mHour:0$mMinute"
-            } else if (mMinute >= 10 && mHour < 10){
-                mTime.value = "0$mHour:$mMinute"
-            } else {
-                mTime.value = "$mHour:$mMinute"
-            }
+            mTime.value = DateTimeFormat.parseHourAndMinToTime(mHour, mMinute)
         }, mHour, mMinute, true
     )
 
@@ -116,15 +103,12 @@ fun AddMealPlannerEntry(navController: NavController){
         Column() {
             ViewMealPlannerTitle(title = "Recipe")
             Column {
-
                 // Up Icon when expanded and down icon when collapsed
                 val icon = if (mExpanded)
                     Icons.Filled.KeyboardArrowUp
                 else
                     Icons.Filled.KeyboardArrowDown
-
                 Column(Modifier.padding(20.dp)) {
-
                     // Create an Outlined Text Field
                     // with icon and not expanded
                     OutlinedTextField(
@@ -166,10 +150,8 @@ fun AddMealPlannerEntry(navController: NavController){
             }
         }
         Button(onClick = {
-            val date = mDate.value + " " + mTime.value
-            val dateFormatted : Date = SimpleDateFormat("dd/MM/yyyy HH:mm").parse(date)
-            val dateTime : Long = dateFormatted.time/1000
-            var selectedRecipe : Recipe = Recipe()
+            val dateTime = DateTimeFormat.parseStringToEpoch(mDate.value, mTime.value)
+            var selectedRecipe = Recipe()
             for (recipe in recipes.value){
                 if (recipe.name == mSelectedText){
                     selectedRecipe = recipe

@@ -18,9 +18,6 @@ class RecipesRepositoryFirebase : IRecipesRepository {
     private val database: FirebaseFirestore = Firebase.firestore
     private val recipesRef = database.collection("recipes")
 
-
-
-
     override fun getRecipes() {
         val propertyName = "recipes"
         val recipes: MutableList<Recipe> = mutableListOf()
@@ -30,7 +27,6 @@ class RecipesRepositoryFirebase : IRecipesRepository {
                         recipeSnapshot.exception?.message?.let { Log.e(TAG, it) }
                         return@addOnCompleteListener
                     }
-
                     val recipeResult = recipeSnapshot.result
                     if (recipeResult == null) {
                         Log.e(TAG, "Recipe result is null")

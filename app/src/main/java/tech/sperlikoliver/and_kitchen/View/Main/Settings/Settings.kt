@@ -70,7 +70,7 @@ private fun Email(viewModel: SettingsViewModel){
             .padding(start = 15.dp, end = 15.dp)
     ) {
         Text(text = email.value)
-        IconButton(onClick = { changingEmail = !changingEmail }) {
+        IconButton(onClick = { changingEmail = !changingEmail}) {
             Icon(Icons.Filled.Edit, "Edit Email", tint = MaterialTheme.colors.primary)
         }
     }

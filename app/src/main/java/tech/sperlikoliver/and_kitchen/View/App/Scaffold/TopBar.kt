@@ -36,12 +36,9 @@ fun TopBarView(navController : NavController, currentRoute: String?) {
                     icon = Icons.Filled.Settings
                 )
 
-
+                }
             }
         }
-
-        }
-
     }
 
 @Composable

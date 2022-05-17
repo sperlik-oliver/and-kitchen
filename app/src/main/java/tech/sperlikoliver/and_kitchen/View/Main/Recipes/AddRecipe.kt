@@ -16,7 +16,6 @@ import tech.sperlikoliver.and_kitchen.ViewModel.Recipes.AddRecipeViewModel
 
 @Composable
 fun AddRecipe(navController: NavController){
-
     val viewModel : AddRecipeViewModel = remember {
         AddRecipeViewModel()
     }

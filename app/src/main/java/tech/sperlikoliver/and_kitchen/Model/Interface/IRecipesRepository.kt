@@ -10,3 +10,5 @@ interface IRecipesRepository : PropertyChangeAware{
     fun editRecipe(recipe : Recipe)
     fun deleteRecipe(recipe : Recipe)
 }
+
+
