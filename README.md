@@ -1,5 +1,9 @@
 # kitchen-and
 
+<h3>Video</h3>
+https://youtu.be/WEidyl6PcXs
+We have also presented the app in class :)
+
 The goal of this application is to improve the user's experience when it comes to cooking by allowing the storage of ingredients, recipes and meal plans all in one place. The application aims to provide the user with some quality of life features that will simplify the interactions between ingredients, recipes and meal planning.
 
 
