@@ -7,7 +7,7 @@ The goal of this application is to improve the user's experience when it comes t
 
 <b>Critical</b> 
 </br>
-- [ ] As a user, I want to create ingredients in my shopping list, so that I can remember what I want to purchase
+- [ x ] As a user, I want to create ingredients in my shopping list, so that I can remember what I want to purchase
 - [ ] As a user, I want to delete ingredients from my shopping list, so that the shopping list matches what I need if I change my mind
 - [ ] As a user, I want to mark shopping list ingredients as purchased, so that I can see which ingredients I don't need anymore
 - [ ] As a user, I want to register and log in, so that I can keep my information when I switch devices
