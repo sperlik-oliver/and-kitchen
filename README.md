@@ -31,7 +31,7 @@ The goal of this application is to improve the user's experience when it comes t
 - [ ] As a user, I want to edit the picture of a recipe, so that it better matches the look of the food
 - [ ] As a user, I want to remove the picture of a recipe, so that I don't see pictures that I don't need anymore
 - [x] As a user, I want to retrieve a random recipe from the internet, so that I can get cooking inspiration
-- [ ] As a user, I want to be able to use dark mode in the app according to my system settings, so that the app matches my phone's dark mode
+- [x] As a user, I want to be able to use dark mode in the app according to my system settings, so that the app matches my phone's dark mode
 </br>
 
 <b>Low</b>
